@@ -17,7 +17,7 @@ export default function Articles(
   // we should render a Navigate to login screen (React Router v.6)
   if(!token){
     const navigate = useNavigate()
-    navigate('/login')
+    navigate('/')
   }
   useEffect(() => {
     // ✨ grab the articles here, on first render only

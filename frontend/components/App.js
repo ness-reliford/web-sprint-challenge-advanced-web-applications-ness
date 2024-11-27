@@ -39,18 +39,10 @@ export default function App() {
   }
 
   const login = async ({ username, password }) => {
-    // ✨ implement
-    // We should flush the message state, turn on the spinner
+    
     setMessage('')
     setSpinnerOn(true)
-    // and launch a request to the proper endpoint.
-
-    // if (username.trim().length < 3 || password.trim().length < 8) {
-    //   setMessage('Username must be at least 3 characters and password must be at least 8 characters.');
-    //   setSpinnerOn(false);
-    //   return;
-    // }
-
+   
     try {
       const response = await fetch(loginUrl, {
         method: 'POST',
@@ -67,14 +59,14 @@ export default function App() {
       setToken(data.token)
       setMessage('Login successful!')
       redirectToArticles()
+      getArticles()
     } catch (error){
       console.error(error)
       setMessage('Login failed. Please try again.')
+      
+    } finally {
       setSpinnerOn(false)
     }
-    // On success, we should set the token to local storage in a 'token' key,
-    // put the server success message in its proper state, and redirect
-    // to the Articles screen. Don't forget to turn off the spinner!
     
   }
 
