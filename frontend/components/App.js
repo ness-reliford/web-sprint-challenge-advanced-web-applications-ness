@@ -108,15 +108,12 @@ export default function App() {
     console.log(article)
     setMessage('')
     setSpinnerOn(true)
-
+    const token = localStorage.getItem('token')
     try {
       const response = await axios.post(articlesUrl, article, {
-        
         headers: {
           Authorization: `${token}`,
         },
-         
-  
       });
   
       // if (!response.ok) {
@@ -138,13 +135,12 @@ export default function App() {
 
     setMessage('')
     setSpinnerOn(true)
-
+    const token = localStorage.getItem('token')
     try {
-      const response = await fetch(`${articlesUrl}/${articleId}`, {
-        method: 'PUT',
+      const response = await axios.put(`${articlesUrl}/${articleId}`, {
+        
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `${token}`,
         },
         body: JSON.stringify(updatedArticleData),
       });
@@ -172,27 +168,27 @@ export default function App() {
    
     setMessage('')
     setSpinnerOn(true)
-
+    const token = localStorage.getItem('token')
     try {
-      const response = await fetch(`${articlesUrl}/${articleId}`, {
-        method: 'DELETE',
+      const response = await axios.delete(`${articlesUrl}/${articleId}`, {
+       
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `${token}`,
         },
         
       });
   
-      if (!response.ok) {
-        throw new Error('Failed to delete article.');
-      }
+      // if (!response.ok) {
+      //   throw new Error('Failed to delete article.');
+      // }
   
-      const updatedArticle = await response.json();
+      const updatedArticle = response.data.article
       setArticles(
         articles.map((article) =>
           article.id === updatedArticle.id ? updatedArticle : article
         )
       );
-      setMessage('Article deleted successfully.');
+      setMessage(response.data.message);
     } catch (error) {
       console.error(error);
       setMessage('Failed to delete article. Please try again.');
