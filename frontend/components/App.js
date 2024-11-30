@@ -63,6 +63,7 @@ export default function App() {
       setSpinnerOn(false)
     }
  }
+
   const getArticles = async () => {
   
     setMessage('')
@@ -97,28 +98,20 @@ export default function App() {
       setSpinnerOn(false)
     }
   }
- 
-  // useEffect(() => {
-  //   if(token) {
-  //     getArticles()
-  //   }
-  // },[token])
 
   const postArticle = async article => {
+    
     console.log(article)
     setMessage('')
     setSpinnerOn(true)
     const token = localStorage.getItem('token')
+
     try {
       const response = await axios.post(articlesUrl, article, {
         headers: {
           Authorization: `${token}`,
         },
       });
-  
-      // if (!response.ok) {
-      //   throw new Error('Failed to post article.');
-      // }
   
       const newArticle = response.data.article
       setArticles([...articles, newArticle]);
@@ -136,20 +129,15 @@ export default function App() {
     setMessage('')
     setSpinnerOn(true)
     const token = localStorage.getItem('token')
+
     try {
-      const response = await axios.put(`${articlesUrl}/${articleId}`, {
-        
+      const response = await axios.put(`${articlesUrl}/${articleId}`, updatedArticleData, {
         headers: {
           Authorization: `${token}`,
         },
-        body: JSON.stringify(updatedArticleData),
       });
   
-      if (!response.ok) {
-        throw new Error('Failed to update article.');
-      }
-  
-      const updatedArticle = await response.json();
+      const updatedArticle = response.data.article
       setArticles(
         articles.map((article) =>
           article.id === updatedArticle.id ? updatedArticle : article
@@ -169,6 +157,7 @@ export default function App() {
     setMessage('')
     setSpinnerOn(true)
     const token = localStorage.getItem('token')
+
     try {
       const response = await axios.delete(`${articlesUrl}/${articleId}`, {
        
@@ -178,14 +167,9 @@ export default function App() {
         
       });
   
-      // if (!response.ok) {
-      //   throw new Error('Failed to delete article.');
-      // }
-  
-      const updatedArticle = response.data.article
       setArticles(
-        articles.map((article) =>
-          article.id === updatedArticle.id ? updatedArticle : article
+        articles.filter((article) =>
+          article.id !== articleId
         )
       );
       setMessage(response.data.message);
