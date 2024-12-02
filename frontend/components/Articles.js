@@ -51,7 +51,7 @@ export default function Articles(
               >
                 Edit
               </button>
-              <button onClick={() => deleteArticle(article.id)}>Delete</button>
+              <button onClick={() => deleteArticle(article.article_id)}>Delete</button>
             </div>
           </div>
         ))

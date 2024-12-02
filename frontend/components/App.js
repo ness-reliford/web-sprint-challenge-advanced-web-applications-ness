@@ -140,10 +140,11 @@ export default function App() {
       const updatedArticle = response.data.article
       setArticles(
         articles.map((article) =>
-          article.id === updatedArticle.id ? updatedArticle : article
+          article.article_id === articleId ? updatedArticle : article
         )
       );
-      setMessage('Article updated successfully.');
+      setMessage(response.data.message);
+      setCurrentArticleId(null)
     } catch (error) {
       console.error(error);
       setMessage('Failed to update article. Please try again.');
@@ -169,7 +170,7 @@ export default function App() {
   
       setArticles(
         articles.filter((article) =>
-          article.id !== articleId
+          article.article_id !== articleId
         )
       );
       setMessage(response.data.message);

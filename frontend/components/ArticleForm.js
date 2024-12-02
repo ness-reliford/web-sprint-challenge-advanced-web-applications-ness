@@ -16,7 +16,7 @@ export default function ArticleForm({
     if(currentArticle) {
       setValues({
         title: currentArticle.title,
-        text: currentArticle.title,
+        text: currentArticle.text,
         topic: currentArticle.topic
       })
     } else {
